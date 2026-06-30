@@ -9,19 +9,7 @@
   </head>
   <body>
     <canvas id="particle-field" aria-hidden="true"></canvas>
-    <audio id="bg-song" src="assets/song.mp3" preload="metadata" loop></audio>
-
-    <button class="music-player" id="music-toggle" type="button" aria-label="Play the soundtrack">
-      <span class="music-icon" aria-hidden="true">
-        <i></i>
-        <i></i>
-        <i></i>
-      </span>
-      <span class="music-copy">
-        <strong>Play her soundtrack</strong>
-        <small>Sweet Disposition</small>
-      </span>
-    </button>
+    <audio id="bg-song" src="assets/song.mp3" preload="auto" autoplay loop></audio>
 
     <header class="topbar">
       <a class="brand" href="#top" aria-label="Back to top">
@@ -49,13 +37,28 @@
           <a class="button" href="#sunlight">Begin gently</a>
         </div>
 
-        <figure class="photo-card reveal">
-          <img src="assets/IMG_3462.jpg" alt="Ishaa sitting in a sunny park" />
-          <figcaption>
-            <span>Ishaa</span>
-            <strong>sunlight, soft eyes, and a whole little weather system.</strong>
-          </figcaption>
-        </figure>
+        <div class="hero-media reveal">
+          <figure class="photo-card">
+            <img src="assets/IMG_3462.jpg" alt="Ishaa sitting in a sunny park" />
+            <figcaption>
+              <span>Ishaa</span>
+              <strong>sunlight, soft eyes, and a whole little weather system.</strong>
+            </figcaption>
+          </figure>
+
+          <button class="music-player" id="music-toggle" type="button" aria-label="Pause the soundtrack">
+            <span class="music-orb" aria-hidden="true">
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+            </span>
+            <span class="music-copy">
+              <strong>Starting soundtrack</strong>
+              <small>Sweet Disposition</small>
+            </span>
+          </button>
+        </div>
       </section>
 
       <section id="sunlight" class="story-section opening">

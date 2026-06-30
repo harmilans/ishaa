@@ -52,33 +52,64 @@ function setupMusic() {
   const title = toggle.querySelector("strong");
   const subtitle = toggle.querySelector("small");
 
+  function setPlaying() {
+    toggle.classList.add("is-playing");
+    toggle.setAttribute("aria-label", "Pause the soundtrack");
+    title.textContent = "Pause soundtrack";
+    subtitle.textContent = "Sweet Disposition";
+  }
+
+  function setPaused(label = "Play soundtrack", sublabel = "Sweet Disposition") {
+    toggle.classList.remove("is-playing");
+    toggle.setAttribute("aria-label", "Play the soundtrack");
+    title.textContent = label;
+    subtitle.textContent = sublabel;
+  }
+
+  async function playSong(showBlockedState = false) {
+    try {
+      song.volume = 0.72;
+      await song.play();
+      setPlaying();
+      return true;
+    } catch {
+      if (showBlockedState) setPaused("Tap to start", "Browser paused autoplay");
+      return false;
+    }
+  }
+
   async function toggleMusic() {
     if (song.paused) {
       try {
-        await song.play();
-        toggle.classList.add("is-playing");
-        toggle.setAttribute("aria-label", "Pause the soundtrack");
-        title.textContent = "Pause soundtrack";
-        subtitle.textContent = "Sweet Disposition";
+        await playSong();
       } catch {
         title.textContent = "Add song.mp3";
         subtitle.textContent = "assets/song.mp3";
       }
     } else {
       song.pause();
-      toggle.classList.remove("is-playing");
-      toggle.setAttribute("aria-label", "Play the soundtrack");
-      title.textContent = "Play her soundtrack";
-      subtitle.textContent = "Sweet Disposition";
+      setPaused();
     }
   }
 
-  song.addEventListener("ended", () => toggle.classList.remove("is-playing"));
+  song.addEventListener("playing", setPlaying);
+  song.addEventListener("pause", () => setPaused());
+  song.addEventListener("ended", () => setPaused());
   song.addEventListener("error", () => {
     title.textContent = "Add song.mp3";
     subtitle.textContent = "assets/song.mp3";
   });
   toggle.addEventListener("click", toggleMusic);
+
+  playSong(true);
+
+  const retryAutoplay = () => {
+    if (song.paused) playSong();
+    window.removeEventListener("pointerdown", retryAutoplay);
+    window.removeEventListener("keydown", retryAutoplay);
+  };
+  window.addEventListener("pointerdown", retryAutoplay, { once: true });
+  window.addEventListener("keydown", retryAutoplay, { once: true });
 }
 
 setupParticles();
