@@ -46,5 +46,41 @@ function setupReveal() {
   document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
 }
 
+function setupMusic() {
+  const song = document.querySelector("#bg-song");
+  const toggle = document.querySelector("#music-toggle");
+  const title = toggle.querySelector("strong");
+  const subtitle = toggle.querySelector("small");
+
+  async function toggleMusic() {
+    if (song.paused) {
+      try {
+        await song.play();
+        toggle.classList.add("is-playing");
+        toggle.setAttribute("aria-label", "Pause the soundtrack");
+        title.textContent = "Pause soundtrack";
+        subtitle.textContent = "Sweet Disposition";
+      } catch {
+        title.textContent = "Add song.mp3";
+        subtitle.textContent = "assets/song.mp3";
+      }
+    } else {
+      song.pause();
+      toggle.classList.remove("is-playing");
+      toggle.setAttribute("aria-label", "Play the soundtrack");
+      title.textContent = "Play her soundtrack";
+      subtitle.textContent = "Sweet Disposition";
+    }
+  }
+
+  song.addEventListener("ended", () => toggle.classList.remove("is-playing"));
+  song.addEventListener("error", () => {
+    title.textContent = "Add song.mp3";
+    subtitle.textContent = "assets/song.mp3";
+  });
+  toggle.addEventListener("click", toggleMusic);
+}
+
 setupParticles();
 setupReveal();
+setupMusic();

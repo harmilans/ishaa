@@ -9,6 +9,19 @@
   </head>
   <body>
     <canvas id="particle-field" aria-hidden="true"></canvas>
+    <audio id="bg-song" src="assets/song.mp3" preload="metadata" loop></audio>
+
+    <button class="music-player" id="music-toggle" type="button" aria-label="Play the soundtrack">
+      <span class="music-icon" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+      <span class="music-copy">
+        <strong>Play her soundtrack</strong>
+        <small>Sweet Disposition</small>
+      </span>
+    </button>
 
     <header class="topbar">
       <a class="brand" href="#top" aria-label="Back to top">
